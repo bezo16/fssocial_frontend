@@ -12,8 +12,8 @@ const BaseButton: React.FC<BaseButtonProps> = ({ label, ...props }) => {
             colorScheme="teal"
             size="md"
             borderRadius="md"
-            _hover={{ bg: 'teal.600' }}
             {...props}
+            variant="surface"
         >
             {label}
         </Button>
