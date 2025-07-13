@@ -1,10 +1,12 @@
 'use client';
 import BaseButton from "@/components/ui/common/BaseButton";
 import { Input } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 
 
 const RegisterPage = () => {
+    const router = useRouter();
 
     const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -24,6 +26,7 @@ const RegisterPage = () => {
         if (response.ok) {
             const data = await response.json();
             console.log("Registration successful:", data);
+            router.push("/feed");
             // Handle successful registration (e.g., redirect to login page)
         } else {
             const errorData = await response.json();

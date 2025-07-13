@@ -2,8 +2,10 @@
 
 import BaseButton from "@/components/ui/common/BaseButton";
 import { Input } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+    const router = useRouter();
 
     const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -22,11 +24,12 @@ const LoginPage = () => {
 
         if (response.ok) {
             const data = await response.json();
-            console.log("Registration successful:", data);
+            console.log("login successful:", data);
+            router.push("/feed");
             // Handle successful registration (e.g., redirect to login page)
         } else {
             const errorData = await response.json();
-            console.error("Registration failed:", errorData);
+            console.error("login failed:", errorData);
             // Handle registration error (e.g., show error message)
         }
     }
