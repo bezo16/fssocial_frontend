@@ -1,12 +1,13 @@
 "use client"
-import { Button, ButtonProps } from '@chakra-ui/react';
+import { Button, ButtonProps, Spinner } from '@chakra-ui/react';
 import React from 'react';
 
 interface BaseButtonProps extends ButtonProps {
     label: string;
+    isLoading?: boolean;
 }
 
-const BaseButton: React.FC<BaseButtonProps> = ({ label, ...props }) => {
+const BaseButton: React.FC<BaseButtonProps> = ({ label, isLoading = false , ...props }) => {
     return (
         <Button
             colorScheme="teal"
@@ -15,7 +16,7 @@ const BaseButton: React.FC<BaseButtonProps> = ({ label, ...props }) => {
             {...props}
             variant="surface"
         >
-            {label}
+            {isLoading ? <Spinner size="md" /> : label}
         </Button>
     );
 };
