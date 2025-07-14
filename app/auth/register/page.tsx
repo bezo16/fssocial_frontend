@@ -1,5 +1,5 @@
 'use client';
-import BaseButton from "@/components/ui/common/BaseButton";
+import BaseButton from "@/components/common/BaseButton";
 import { Input } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 
