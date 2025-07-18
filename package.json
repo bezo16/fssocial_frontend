@@ -6,11 +6,12 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint --fix"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.22.0",
     "@emotion/react": "^11.14.0",
+    "@stylistic/eslint-plugin": "^5.2.0",
     "@tanstack/react-query": "^5.83.0",
     "axios": "^1.10.0",
     "next": "15.3.5",
