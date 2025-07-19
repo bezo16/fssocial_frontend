@@ -28,7 +28,7 @@ export default function RootLayout({
     <ReactQueryProviderClient>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable}`}
         >
           <Provider>{children}</Provider>
         </body>

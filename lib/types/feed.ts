@@ -1,4 +1,4 @@
-export type FeedPost = {
+export type Post = {
   id: string
   title: string
   content: string | null

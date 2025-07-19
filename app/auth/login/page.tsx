@@ -17,7 +17,6 @@ const LoginPage = () => {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginFormInputs>()
 
   const handleLogin = async (data: LoginFormInputs) => {
-    console.log("submiting")
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data, { withCredentials: true })
       router.push("/feed")
