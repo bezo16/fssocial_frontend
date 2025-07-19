@@ -1,47 +1,79 @@
 "use client"
+
 import BaseButton from "@/components/common/BaseButton"
-import { Input } from "@chakra-ui/react"
+import TextInput from "@/components/common/TextInput"
 import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { toaster } from "@/components/ui/toaster"
+import axios from "axios"
+
+type RegisterFormInputs = {
+  username: string
+  email: string
+  password: string
+}
 
 const RegisterPage = () => {
   const router = useRouter()
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<RegisterFormInputs>()
 
-  const handleRegister = async (event: React.FormEvent) => {
-    event.preventDefault()
-    const formData = new FormData(event.target as HTMLFormElement)
-    const username = formData.get("username")
-    const email = formData.get("email")
-    const password = formData.get("password")
-
-    const response = await fetch("http://localhost:4000/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, email, password }),
-    })
-
-    if (response.ok) {
-      const data = await response.json()
-      console.log("Registration successful:", data)
+  const handleRegister = async (data: RegisterFormInputs) => {
+    try {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+        data,
+        { withCredentials: true },
+      )
       router.push("/feed")
-      // Handle successful registration (e.g., redirect to login page)
     }
-    else {
-      const errorData = await response.json()
-      console.error("Registration failed:", errorData)
-      // Handle registration error (e.g., show error message)
+    catch (error) {
+      console.error("Registration error:", error)
+      toaster.error({
+        title: "Registration failed",
+        description: "Something went wrong",
+        closable: true,
+      })
     }
   }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h1>Register Page</h1>
-      <form className="flex flex-col gap-4 w-full max-w-sm" onSubmit={handleRegister}>
-        <Input type="text" name="username" placeholder="Enter your username" variant="outline" required={true} />
-        <Input type="email" name="email" placeholder="Enter your email" variant="outline" required={true} />
-        <Input type="password" name="password" placeholder="Enter your password" variant="outline" required={true} />
-        <BaseButton label="register" type="submit" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600" />
+      <form className="flex flex-col gap-4 w-full max-w-sm" onSubmit={handleSubmit(handleRegister)}>
+        <TextInput
+          errorText={errors.username?.message}
+          label="username"
+          {...register("username", { required: "Username is required" })}
+          type="text"
+        />
+        <TextInput
+          errorText={errors.email?.message}
+          label="email"
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
+              message: "Invalid email address",
+            },
+          })}
+          type="email"
+        />
+        <TextInput
+          errorText={errors.password?.message}
+          label="password"
+          {...register("password", {
+            required: "Password is required",
+            minLength: { value: 8, message: "Password must be at least 8 characters" },
+          })}
+          type="password"
+        />
+        <BaseButton
+          disabled={isSubmitting}
+          isLoading={isSubmitting}
+          label="register"
+          type="submit"
+          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+        />
       </form>
     </div>
   )
