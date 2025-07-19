@@ -10,7 +10,7 @@ export default function BlogPostPage() {
       <header>
         <CreatePostForm />
       </header>
-      <main>
+      <main className="flex flex-col items-center">
         {posts?.map(post => (
           <div key={post.id} className="border-b border-gray-200 !my-10">
             <h3 className="text-lg font-semibold">{post.title}</h3>

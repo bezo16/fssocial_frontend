@@ -9,6 +9,7 @@ libs used:
 rules:
   - always write typescript code never vanilla javascript!
   - always check version of packages and write code which is suitable with that version
+  - never use builtin fetch, always use axiosApiCall, which is wrapper for axios call.
 
 
 
