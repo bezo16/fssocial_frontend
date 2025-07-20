@@ -31,6 +31,11 @@ const NavigationBar = () => {
               Profile
             </Link>
           </NextLink>
+          <NextLink href="/feed/search">
+            <Link color="white" mx={4}>
+              Search
+            </Link>
+          </NextLink>
           <Button colorScheme="teal" variant="outline" size="sm" onClick={signOut}>
             Sign out
           </Button>
