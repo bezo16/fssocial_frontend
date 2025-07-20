@@ -3,11 +3,16 @@
 import { Box, Heading, Text, Spinner, Flex } from "@chakra-ui/react"
 import { useParams } from "next/navigation"
 import { useUserData } from "@/lib/hooks/useUserData"
+import BaseButton from "@/components/common/BaseButton"
+import { useFollowUser } from "@/lib/hooks/useFollowUser"
+import { useUnfollowUser } from "@/lib/hooks/useUnfollowUser"
 
 const UserProfilePage = () => {
   const params = useParams<{ id: string }>()
   const id = params?.id
   const { data: user, isLoading, isError, error } = useUserData(id)
+  const { mutateAsync: followUser, isPending: isFollowing } = useFollowUser(user?.id)
+  const { mutateAsync: unFollowUser, isPending: isUnfollowing } = useUnfollowUser(user?.id)
 
   if (isLoading) {
     return (
@@ -48,6 +53,33 @@ const UserProfilePage = () => {
           <Text color="gray.500" fontSize="md">
             @
             {user.username}
+          </Text>
+          {user.isFollowed
+            ? (
+                <BaseButton
+                  label="Unfollow"
+                  mt={4}
+                  w="40%"
+                  fontWeight="bold"
+                  fontSize="md"
+                  onClick={() => unFollowUser(user.id)}
+                  disabled={isUnfollowing}
+                />
+              )
+            : (
+                <BaseButton
+                  label="Follow"
+                  mt={4}
+                  w="40%"
+                  fontWeight="bold"
+                  fontSize="md"
+                  onClick={() => followUser(user.id)}
+                  disabled={isFollowing}
+                />
+              )}
+          <Text mt={3} color="gray.700" fontWeight="semibold" fontSize="lg">
+            Followers:
+            <Text as="span" color="blue.500" fontWeight="bold">{user.followsCount}</Text>
           </Text>
         </Flex>
         <Box mb={6} borderBottomWidth={1} borderColor="gray.100" />

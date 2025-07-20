@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
 import axiosApiCall from "@/lib/api/axiosApiCall"
-import type { User } from "../types/user"
+import type { UserDto } from "../types/user"
 
 export const useUserData = (id: string) => {
-  return useQuery<User>({
+  return useQuery<UserDto>({
     queryKey: ["user", id],
     queryFn: async () => {
-      const { data } = await axiosApiCall.get<User>(`/users/${id}`)
+      const { data } = await axiosApiCall.get<UserDto>(`/users/${id}`)
       return data
     },
     enabled: !!id,
