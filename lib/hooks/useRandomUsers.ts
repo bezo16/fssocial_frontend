@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
-import { UserDto } from "../types/user"
+import { UserPreviewDto } from "../types/user"
 import axiosApiCall from "../api/axiosApiCall"
 
 const useRandomUsers = () => {
   return useQuery({
     queryKey: ["randomUsers"],
     queryFn: async () => {
-      const response = await axiosApiCall.get<UserDto[]>(`/users/random`)
+      const response = await axiosApiCall.get<UserPreviewDto []>(`/users/random`)
       return response.data
     },
   })
