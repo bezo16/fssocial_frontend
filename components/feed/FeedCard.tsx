@@ -1,8 +1,11 @@
+"use client"
 import { FC } from "react"
-import { Box, Text, VStack } from "@chakra-ui/react"
+import { Box, Text } from "@chakra-ui/react"
+import { FeedPost } from "@/lib/types/feed"
+import Image from "next/image"
 
 type Props = {
-  post: string
+  post: FeedPost
 }
 
 const FeedCard: FC<Props> = ({ post }) => {
@@ -16,14 +19,36 @@ const FeedCard: FC<Props> = ({ post }) => {
       bg="white"
       _hover={{ boxShadow: "lg" }}
     >
-      <VStack align="start">
-        <Text fontSize="lg" fontWeight="bold" color="gray.800">
-          Post
+      <Box display="flex" alignItems="center" mb={3} gap={3}>
+        <Text fontSize="md" fontWeight="bold" color="gray.700">
+          {post.author.username}
         </Text>
-        <Text fontSize="md" color="gray.600">
-          {post}
-        </Text>
-      </VStack>
+      </Box>
+      <Text fontSize="lg" fontWeight="bold" color="gray.800" mb={2}>
+        {post.post.title}
+      </Text>
+      <Text fontSize="md" color="gray.600" mb={3}>
+        {post.post.content}
+      </Text>
+      {post.post.imageUrl && (
+        <Box
+          mt={2}
+          borderRadius="lg"
+          overflow="hidden"
+          bg="gray.200"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Image
+            src={post.post.imageUrl}
+            alt={post.post.title}
+            width={300}
+            height={300}
+            style={{ objectFit: "cover" }}
+          />
+        </Box>
+      )}
     </Box>
   )
 }

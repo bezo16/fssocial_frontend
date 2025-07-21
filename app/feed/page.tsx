@@ -1,7 +1,11 @@
+"use client"
 import FeedCard from "@/components/feed/FeedCard"
 import RandomUsers from "@/components/users/RandomUsers"
+import useFeedPosts from "@/lib/hooks/useFeedPosts"
 
 const FeedPage = () => {
+  const { data: feedPosts } = useFeedPosts()
+
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="text-center p-6 rounded-md">
@@ -10,7 +14,9 @@ const FeedPage = () => {
         <RandomUsers />
       </header>
       <main>
-        <FeedCard post="just dummy post" />
+        {feedPosts && feedPosts.map(post => (
+          <FeedCard key={post.post.id} post={post} />
+        ))}
       </main>
     </div>
   )
