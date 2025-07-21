@@ -1,4 +1,5 @@
 import NavigationBar from "@/components/common/NavigationBar"
+import React from "react"
 
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -7,7 +8,9 @@ const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
         <NavigationBar />
       </header>
       <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow-md">
-        {children}
+        <React.Suspense fallback={<div>Loading...</div>}>
+          {children}
+        </React.Suspense>
       </div>
     </div>
   )
