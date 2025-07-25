@@ -18,7 +18,9 @@ const LoginPage = () => {
 
   const handleLogin = async (data: LoginFormInputs) => {
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, data, { withCredentials: true })
+      const response = await axios.post(`/api/auth/login`, data, { withCredentials: true })
+      const token = response.data.token
+      localStorage.setItem("authToken", token)
       router.push("/feed")
     }
     catch (error) {
