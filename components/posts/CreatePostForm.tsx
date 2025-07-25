@@ -1,9 +1,9 @@
 import { useForm, SubmitHandler } from "react-hook-form"
 import TextInput from "../common/TextInput"
 import BaseButton from "../common/BaseButton"
-import axios from "axios"
 import { toaster } from "../ui/toaster"
 import { useQueryClient } from "@tanstack/react-query"
+import axiosApiCall from "@/lib/api/axiosApiCall"
 
 type FormValues = {
   title: string
@@ -17,7 +17,7 @@ const CreatePostForm = () => {
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/posts`, data, { withCredentials: true })
+      await axiosApiCall.post("/posts", data)
       toaster.success({ title: "Post created", description: "Your post has been created successfully", closable: true })
       queryClient.invalidateQueries({ queryKey: ["profilePostsMe"] })
       reset()
