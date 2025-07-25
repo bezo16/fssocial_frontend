@@ -24,4 +24,8 @@ export type FeedPost = {
     id: string
     username: string
   }
+  likes: {
+    count: number
+    isLiked: boolean
+  }
 }
