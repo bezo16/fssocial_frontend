@@ -28,4 +28,16 @@ export type FeedPost = {
     count: number
     isLiked: boolean
   }
+  comments: {
+    id: string
+    userId: string
+    targetType: string
+    targetId: string
+    content: string
+    createdAt: Date
+    updatedAt: Date
+    author: {
+      username: string
+    }
+  }[] | null
 }

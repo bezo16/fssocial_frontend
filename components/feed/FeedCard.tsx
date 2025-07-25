@@ -1,11 +1,18 @@
 "use client"
-import { FC } from "react"
+import { FC, useState } from "react"
 import { Box, Text, IconButton } from "@chakra-ui/react"
 import { FeedPost } from "@/lib/types/feed"
 import Image from "next/image"
 import { FaHeart } from "react-icons/fa"
 import useLikePost from "@/lib/hooks/useLikePost"
 import useUnlikePost from "@/lib/hooks/useUnlikePost"
+import { useForm } from "react-hook-form"
+import TextInput from "@/components/common/TextInput"
+import BaseButton from "@/components/common/BaseButton"
+import useCreateComment from "@/lib/hooks/useCreateComment"
+type CommentFormInputs = {
+  content: string
+}
 
 type Props = {
   post: FeedPost
@@ -14,9 +21,17 @@ type Props = {
 const FeedCard: FC<Props> = ({ post }) => {
   const { mutateAsync: likePost } = useLikePost(post.post.id)
   const { mutateAsync: unlikePost } = useUnlikePost(post.post.id)
+  const { mutateAsync: createComment } = useCreateComment()
+  const [showCommentForm, setShowCommentForm] = useState(false)
+  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<CommentFormInputs>()
 
   const handleLike = async (action: "LIKE" | "UNLIKE") => {
     await (action === "LIKE" ? likePost() : unlikePost())
+  }
+
+  const handleAddComment = async (data: CommentFormInputs) => {
+    await createComment({ content: data.content, targetType: "post", targetId: post.post.id })
+    reset()
   }
 
   return (
@@ -73,6 +88,51 @@ const FeedCard: FC<Props> = ({ post }) => {
           />
         </Box>
       )}
+      {/* Komentáre */}
+      {Array.isArray(post.comments) && post.comments.length > 0 && (
+        <Box mt={4}>
+          <Text fontWeight="bold" mb={2} color="gray.700">Komentáre</Text>
+          <Box display="flex" flexDirection="column" gap={2}>
+            {post.comments.map(comment => (
+              <Box key={comment.id} p={2} bg="gray.50" borderRadius="md">
+                <Text fontSize="sm" color="gray.800">{comment.content}</Text>
+                <Text fontSize="xs" color="blue.600" fontWeight="bold" letterSpacing="wide">
+                  @
+                  {comment.author.username}
+                </Text>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+      )}
+
+      <Box mt={4}>
+        <BaseButton
+          label={showCommentForm ? "Zrušiť" : "Pridať komentár"}
+          onClick={() => setShowCommentForm(v => !v)}
+          className="mb-2"
+          type="button"
+        />
+        {showCommentForm && (
+          <Box>
+            <form onSubmit={handleSubmit(handleAddComment)}>
+              <TextInput
+                label="Komentár"
+                errorText={errors.content?.message}
+                {...register("content", { required: "Komentár je povinný" })}
+                type="text"
+              />
+              <BaseButton
+                label="Odoslať"
+                type="submit"
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
+                className="mt-2"
+              />
+            </form>
+          </Box>
+        )}
+      </Box>
     </Box>
   )
 }

@@ -8,12 +8,12 @@ const FeedPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <header className="text-center p-6 rounded-md">
+      <header className="text-center p-6 rounded-md !mb-20">
         <h1 className="text-2xl font-bold mb-4">Feed Page</h1>
         <p className="text-gray-600">This is the feed page content.</p>
         <RandomUsers />
       </header>
-      <main>
+      <main className="flex flex-col gap-10">
         {feedPosts && feedPosts.map(post => (
           <FeedCard key={post.post.id} post={post} />
         ))}
