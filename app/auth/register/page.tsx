@@ -5,7 +5,7 @@ import TextInput from "@/components/common/TextInput"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { toaster } from "@/components/ui/toaster"
-import axios from "axios"
+import axiosApiCall from "@/lib/api/axiosApiCall"
 
 type RegisterFormInputs = {
   username: string
@@ -19,8 +19,8 @@ const RegisterPage = () => {
 
   const handleRegister = async (data: RegisterFormInputs) => {
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+      await axiosApiCall.post(
+        "/auth/register",
         data,
         { withCredentials: true },
       )

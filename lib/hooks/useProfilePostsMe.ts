@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
 
 import { Post } from "../types/feed"
+import axiosApiCall from "../api/axiosApiCall"
 
 const useProfilePostsMe = () => {
   return useQuery({
     queryKey: ["profilePostsMe"],
     queryFn: async () => {
-      const response = await axios.get<Post[]>(`${process.env.NEXT_PUBLIC_API_URL}/posts/profile/me`, {
+      const response = await axiosApiCall.get<Post[]>("/posts/profile/me", {
         withCredentials: true,
       })
       return response.data

@@ -1,11 +1,11 @@
-import axios from "axios"
+import axiosApiCall from "../api/axiosApiCall"
 
 const verifyJwtToken = async (token: string) => {
   const returnValue: { valid: boolean, decoded: null | unknown } = { valid: false, decoded: null }
 
   try {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/jwt`,
+    const response = await axiosApiCall.post(
+      "/auth/jwt",
       { token },
       { withCredentials: true },
     )
