@@ -11,6 +11,8 @@ import { useForm } from "react-hook-form"
 import TextInput from "@/components/common/TextInput"
 import BaseButton from "@/components/common/BaseButton"
 import useCreateComment from "@/lib/hooks/comments/useCreateComment"
+import useDeleteComment from "@/lib/hooks/comments/useDeleteComment"
+import useUserDataMe from "@/lib/hooks/users/useUserDataMe"
 type CommentFormInputs = {
   content: string
 }
@@ -23,7 +25,9 @@ const FeedCard: FC<Props> = ({ post }) => {
   const { mutateAsync: likePost } = useLikePost(post.post.id)
   const { mutateAsync: unlikePost } = useUnlikePost(post.post.id)
   const { mutateAsync: createComment } = useCreateComment()
+  const { mutateAsync: deleteComment } = useDeleteComment()
   const [showCommentForm, setShowCommentForm] = useState(false)
+  const { data: userData } = useUserDataMe()
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<CommentFormInputs>()
 
   const handleLike = async (action: "LIKE" | "UNLIKE") => {
@@ -95,17 +99,29 @@ const FeedCard: FC<Props> = ({ post }) => {
           <Text fontWeight="bold" mb={2} color="gray.700">Komentáre</Text>
           <Box display="flex" flexDirection="column" gap={2}>
             {post.comments.map(comment => (
-              <Box key={comment.id} p={2} bg="gray.50" borderRadius="md">
-                <Text fontSize="sm" color="gray.800">{comment.content}</Text>
-                <Text as="span" fontSize="xs" color="blue.600" fontWeight="bold" letterSpacing="wide">
-                  <Link
-                    href={`/profile/${comment.author.id}`}
-                    style={{ textDecoration: "underline", cursor: "pointer" }}
-                  >
-                    @
-                    {comment.author.username}
-                  </Link>
-                </Text>
+              <Box key={comment.id} p={2} bg="gray.50" borderRadius="md" display="flex" alignItems="center" justifyContent="space-between">
+                <Box>
+                  <Text fontSize="sm" color="gray.800">{comment.content}</Text>
+                  <Text as="span" fontSize="xs" color="blue.600" fontWeight="bold" letterSpacing="wide">
+                    <Link
+                      href={`/profile/${comment.author.id}`}
+                      style={{ textDecoration: "underline", cursor: "pointer" }}
+                    >
+                      @
+                      {comment.author.username}
+                    </Link>
+                  </Text>
+                </Box>
+                {userData?.id === comment.author.id && (
+                  <BaseButton
+                    label="Odstrániť"
+                    size="xs"
+                    colorScheme="red"
+                    variant="outline"
+                    onClick={async () => await deleteComment(comment.id)}
+                    className="ml-2"
+                  />
+                )}
               </Box>
             ))}
           </Box>

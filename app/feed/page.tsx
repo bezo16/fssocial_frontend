@@ -1,7 +1,7 @@
 "use client"
 import FeedCard from "@/components/feed/FeedCard"
 import RandomUsers from "@/components/users/RandomUsers"
-import useFeedPosts from "@/lib/hooks/useFeedPosts"
+import useFeedPosts from "@/lib/hooks/posts/useFeedPosts"
 
 const FeedPage = () => {
   const { data: feedPosts } = useFeedPosts()

@@ -1,5 +1,5 @@
 "use client"
-import useSearchUsers from "@/lib/hooks/useSearchUsers"
+import useSearchUsers from "@/lib/hooks/users/useSearchUsers"
 import { useSearchParams } from "next/navigation"
 import { Box, Heading, Text, Flex, Input, Button } from "@chakra-ui/react"
 import Link from "next/link"

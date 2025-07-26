@@ -1,5 +1,5 @@
 "use client"
-import useRandomUsers from "@/lib/hooks/useRandomUsers"
+import useRandomUsers from "@/lib/hooks/users/useRandomUsers"
 import {
   Box,
   Heading,
