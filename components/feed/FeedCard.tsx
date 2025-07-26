@@ -1,6 +1,7 @@
 "use client"
 import { FC, useState } from "react"
 import { Box, Text, IconButton } from "@chakra-ui/react"
+import Link from "next/link"
 import { FeedPost } from "@/lib/types/feed"
 import Image from "next/image"
 import { FaHeart } from "react-icons/fa"
@@ -96,9 +97,14 @@ const FeedCard: FC<Props> = ({ post }) => {
             {post.comments.map(comment => (
               <Box key={comment.id} p={2} bg="gray.50" borderRadius="md">
                 <Text fontSize="sm" color="gray.800">{comment.content}</Text>
-                <Text fontSize="xs" color="blue.600" fontWeight="bold" letterSpacing="wide">
-                  @
-                  {comment.author.username}
+                <Text as="span" fontSize="xs" color="blue.600" fontWeight="bold" letterSpacing="wide">
+                  <Link
+                    href={`/profile/${comment.author.id}`}
+                    style={{ textDecoration: "underline", cursor: "pointer" }}
+                  >
+                    @
+                    {comment.author.username}
+                  </Link>
                 </Text>
               </Box>
             ))}

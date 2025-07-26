@@ -38,6 +38,7 @@ export type FeedPost = {
     updatedAt: Date
     author: {
       username: string
+      id: string
     }
   }[] | null
 }
