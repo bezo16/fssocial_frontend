@@ -1,5 +1,5 @@
 "use client"
-import { FC, useState } from "react"
+import { FC } from "react"
 import { Box, Text, IconButton } from "@chakra-ui/react"
 import Link from "next/link"
 import { FeedPost } from "@/lib/types/feed"
@@ -26,7 +26,6 @@ const FeedCard: FC<Props> = ({ post }) => {
   const { mutateAsync: unlikePost } = useUnlikePost(post.post.id)
   const { mutateAsync: createComment } = useCreateComment()
   const { mutateAsync: deleteComment } = useDeleteComment()
-  const [showCommentForm, setShowCommentForm] = useState(false)
   const { data: userData } = useUserDataMe()
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<CommentFormInputs>()
 
@@ -42,18 +41,25 @@ const FeedCard: FC<Props> = ({ post }) => {
   return (
     <Box
       borderWidth="1px"
-      borderRadius="lg"
+      borderRadius="2xl"
       overflow="hidden"
-      boxShadow="md"
-      p={4}
+      boxShadow="xl"
+      p="24px !important"
       bg="white"
-      _hover={{ boxShadow: "lg" }}
+      _hover={{ boxShadow: "2xl" }}
+      m="24px !important"
+      style={{ transition: "box-shadow 0.2s", marginBottom: "32px !important", marginTop: "16px !important" }}
     >
-      <Box display="flex" alignItems="center" mb={3} gap={3}>
-        <Text fontSize="md" fontWeight="bold" color="gray.700">
-          {post.author.username}
-        </Text>
-        <Box display="flex" alignItems="center" gap={1}>
+      <Box display="flex" alignItems="center" mb="10px !important" gap={1} px="2px !important" style={{ minHeight: "40px" }}>
+        <Link
+          href={`/profile/${post.author.id}`}
+          style={{ textDecoration: "underline", cursor: "pointer" }}
+        >
+          <Text fontSize="lg" fontWeight="bold" color="gray.700" letterSpacing="wide" mb="2px !important" pr="12px !important">
+            {post.author.username}
+          </Text>
+        </Link>
+        <Box display="flex" alignItems="center">
           <IconButton
             aria-label={post.post ? "Unlike" : "Like"}
             variant="ghost"
@@ -63,45 +69,47 @@ const FeedCard: FC<Props> = ({ post }) => {
           >
             <FaHeart color={post.likes.isLiked ? "#E53E3E" : "#A0AEC0"} />
           </IconButton>
-          <Text fontSize="lg" color="gray.700" minW={6} textAlign="center">
+          <Text fontSize="lg" color="gray.700" minW={6} textAlign="center" ml="0 !important">
             {post.likes.count}
           </Text>
         </Box>
       </Box>
-      <Text fontSize="lg" fontWeight="bold" color="gray.800" mb={2}>
+      <Text fontSize="xl" fontWeight="extrabold" color="gray.800" mb="10px !important" letterSpacing="wide">
         {post.post.title}
       </Text>
-      <Text fontSize="md" color="gray.600" mb={3}>
+      <Text fontSize="md" color="gray.600" mb="18px !important" lineHeight={1.7}>
         {post.post.content}
       </Text>
       {post.post.imageUrl && (
         <Box
-          mt={2}
-          borderRadius="lg"
+          mt="12px !important"
+          borderRadius="2xl"
           overflow="hidden"
-          bg="gray.200"
+          bg="gray.100"
           display="flex"
           alignItems="center"
           justifyContent="center"
+          boxShadow="md"
+          p="8px !important"
         >
           <Image
             src={post.post.imageUrl}
             alt={post.post.title}
-            width={300}
-            height={300}
-            style={{ objectFit: "cover" }}
+            width={320}
+            height={320}
+            style={{ objectFit: "cover", borderRadius: "16px" }}
           />
         </Box>
       )}
       {/* Komentáre */}
       {Array.isArray(post.comments) && post.comments.length > 0 && (
-        <Box mt={4}>
-          <Text fontWeight="bold" mb={2} color="gray.700">Komentáre</Text>
-          <Box display="flex" flexDirection="column" gap={2}>
+        <Box mt="24px !important">
+          <Text fontWeight="bold" mb="10px !important" color="gray.700" fontSize="md" letterSpacing="wide">Komentáre</Text>
+          <Box display="flex" flexDirection="column" gap={3}>
             {post.comments.map(comment => (
-              <Box key={comment.id} p={2} bg="gray.50" borderRadius="md" display="flex" alignItems="center" justifyContent="space-between">
+              <Box key={comment.id} p="14px !important" bg="gray.50" borderRadius="lg" display="flex" alignItems="center" justifyContent="space-between" boxShadow="sm" mb="2px !important">
                 <Box>
-                  <Text fontSize="sm" color="gray.800">{comment.content}</Text>
+                  <Text fontSize="md" color="gray.800" mb="2px !important">{comment.content}</Text>
                   <Text as="span" fontSize="xs" color="blue.600" fontWeight="bold" letterSpacing="wide">
                     <Link
                       href={`/profile/${comment.author.id}`}
@@ -120,6 +128,7 @@ const FeedCard: FC<Props> = ({ post }) => {
                     variant="outline"
                     onClick={async () => await deleteComment(comment.id)}
                     className="ml-2"
+                    style={{ fontSize: "12px", padding: "2px 8px !important", borderRadius: "8px !important" }}
                   />
                 )}
               </Box>
@@ -128,32 +137,40 @@ const FeedCard: FC<Props> = ({ post }) => {
         </Box>
       )}
 
-      <Box mt={4}>
-        <BaseButton
-          label={showCommentForm ? "Zrušiť" : "Pridať komentár"}
-          onClick={() => setShowCommentForm(v => !v)}
-          className="mb-2"
-          type="button"
-        />
-        {showCommentForm && (
-          <Box>
-            <form onSubmit={handleSubmit(handleAddComment)}>
-              <TextInput
-                label="Komentár"
-                errorText={errors.content?.message}
-                {...register("content", { required: "Komentár je povinný" })}
-                type="text"
-              />
-              <BaseButton
-                label="Odoslať"
-                type="submit"
-                isLoading={isSubmitting}
-                disabled={isSubmitting}
-                className="mt-2"
-              />
-            </form>
-          </Box>
-        )}
+      <Box mt="32px !important">
+        <Box
+          borderWidth="1px"
+          borderRadius="xl"
+          boxShadow="sm"
+          p="18px !important"
+          bg="gray.50"
+          mt="8px !important"
+          mb="8px !important"
+          display="flex"
+          flexDirection="column"
+          alignItems="flex-start"
+          gap={3}
+        >
+          <form style={{ width: "100%" }} onSubmit={handleSubmit(handleAddComment)}>
+            <TextInput
+              label="Napíš komentár"
+              errorText={errors.content?.message}
+              {...register("content", { required: "Komentár je povinný" })}
+              type="text"
+              placeholder="Zdieľaj svoj názor..."
+              style={{ padding: "12px !important", borderRadius: "8px !important", fontSize: "16px" }}
+            />
+            <BaseButton
+              label="Odoslať komentár"
+              type="submit"
+              isLoading={isSubmitting}
+              disabled={isSubmitting}
+              className="mt-3"
+              style={{ width: "100%", fontWeight: "bold", fontSize: "15px", background: "#3182ce", color: "white" }}
+              _hover={{ background: "#2563eb !important" }}
+            />
+          </form>
+        </Box>
       </Box>
     </Box>
   )
