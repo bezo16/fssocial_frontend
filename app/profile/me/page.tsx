@@ -1,6 +1,6 @@
 "use client"
 import CreatePostForm from "@/components/posts/CreatePostForm"
-import useProfilePostsMe from "@/lib/hooks/useProfilePostsMe"
+import useProfilePostsMe from "@/lib/hooks/posts/useProfilePostsMe"
 
 export default function BlogPostPage() {
   const { data: posts } = useProfilePostsMe()

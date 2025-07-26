@@ -4,8 +4,8 @@ import { Box, Heading, Text, Spinner, Flex } from "@chakra-ui/react"
 import { useParams } from "next/navigation"
 import { useUserData } from "@/lib/hooks/useUserData"
 import BaseButton from "@/components/common/BaseButton"
-import { useFollowUser } from "@/lib/hooks/useFollowUser"
-import { useUnfollowUser } from "@/lib/hooks/useUnfollowUser"
+import { useFollowUser } from "@/lib/hooks/follows/useFollowUser"
+import { useUnfollowUser } from "@/lib/hooks/follows/useUnfollowUser"
 
 const UserProfilePage = () => {
   const params = useParams<{ id: string }>()

@@ -5,12 +5,12 @@ import Link from "next/link"
 import { FeedPost } from "@/lib/types/feed"
 import Image from "next/image"
 import { FaHeart } from "react-icons/fa"
-import useLikePost from "@/lib/hooks/useLikePost"
-import useUnlikePost from "@/lib/hooks/useUnlikePost"
+import useLikePost from "@/lib/hooks/likes/useLikePost"
+import useUnlikePost from "@/lib/hooks/likes/useUnlikePost"
 import { useForm } from "react-hook-form"
 import TextInput from "@/components/common/TextInput"
 import BaseButton from "@/components/common/BaseButton"
-import useCreateComment from "@/lib/hooks/useCreateComment"
+import useCreateComment from "@/lib/hooks/comments/useCreateComment"
 type CommentFormInputs = {
   content: string
 }

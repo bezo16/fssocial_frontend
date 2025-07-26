@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-import { UserPreviewDto } from "../types/user"
-import axiosApiCall from "../api/axiosApiCall"
+import axiosApiCall from "@/lib/api/axiosApiCall"
+import type { UserPreviewDto } from "@/lib/types/user"
 
 const useRandomUsers = () => {
   return useQuery({

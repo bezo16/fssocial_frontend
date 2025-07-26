@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { toaster } from "@/components/ui/toaster"
-import axiosApiCall from "../api/axiosApiCall"
+import axiosApiCall from "@/lib/api/axiosApiCall"
 
 const useCreateComment = () => {
   const queryClient = useQueryClient()

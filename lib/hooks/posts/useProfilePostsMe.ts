@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-
-import { Post } from "../types/feed"
-import axiosApiCall from "../api/axiosApiCall"
+import axiosApiCall from "@/lib/api/axiosApiCall"
+import type { Post } from "@/lib/types/feed"
 
 const useProfilePostsMe = () => {
   return useQuery({

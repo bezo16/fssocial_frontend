@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-import axiosApiCall from "../api/axiosApiCall"
-import { FeedPost } from "../types/feed"
+import axiosApiCall from "@/lib/api/axiosApiCall"
+import type { FeedPost } from "@/lib/types/feed"
 
 const useFeedPosts = () => {
   return useQuery({

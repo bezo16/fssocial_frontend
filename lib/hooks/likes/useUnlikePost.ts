@@ -15,7 +15,6 @@ const useUnlikePost = (postId: string) => {
       return res.data
     },
     onSuccess: () => {
-      // Refetch or update post data in cache
       queryClient.invalidateQueries({ queryKey: ["feedPosts"] })
       queryClient.invalidateQueries({ queryKey: ["post", postId] })
     },

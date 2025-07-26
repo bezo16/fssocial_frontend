@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
-import axiosApiCall from "../api/axiosApiCall"
-import { UserPreviewDto } from "../types/user"
+import axiosApiCall from "@/lib/api/axiosApiCall"
+import type { UserPreviewDto } from "@/lib/types/user"
 
 const useSearchUsers = (query: string) => {
   return useQuery({
