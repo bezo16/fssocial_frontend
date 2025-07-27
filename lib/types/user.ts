@@ -3,6 +3,8 @@ export type UserProfileDto = {
   username: string
   email: string
   password_hash: string
+  avatarUrl?: string
+  bio?: string
   created_at: Date
   updated_at: Date
   followsCount: number

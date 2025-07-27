@@ -1,16 +1,27 @@
 "use client"
 import CreatePostForm from "@/components/posts/CreatePostForm"
 import useProfilePostsMe from "@/lib/hooks/posts/useProfilePostsMe"
+import EditProfileSection from "@/components/users/EditProfileSection"
+import ProfileAvatarSection from "@/components/users/ProfileAvatarSection"
+import Image from "next/image"
 
 export default function BlogPostPage() {
   const { data: posts } = useProfilePostsMe()
-
+  // ...existing code...
+  // Importuj EditProfileSection
+  // import EditProfileSection from "@/components/users/EditProfileSection"
+  // ...existing code...
   return (
     <div className="!p-4">
       <header>
         <CreatePostForm />
       </header>
       <main className="flex flex-col items-center">
+        {/* Profilovka používateľa */}
+        <ProfileAvatarSection />
+        {/* Sekcia na editáciu profilu */}
+        <EditProfileSection />
+        {/* Zoznam príspevkov */}
         {posts?.map(post => (
           <div key={post.id} className="border-b border-gray-200 !my-10">
             <h3 className="text-lg font-semibold">{post.title}</h3>
@@ -23,7 +34,9 @@ export default function BlogPostPage() {
               Created at:
               {new Date(post.createdAt).toLocaleString()}
             </p>
-            {post.imageUrl && <img src={post.imageUrl} alt={post.title} className="mt-2" />}
+            {post.imageUrl && (
+              <Image src={post.imageUrl} alt={post.title} width={320} height={320} className="mt-2" style={{ objectFit: "cover", borderRadius: "16px" }} />
+            )}
           </div>
         ))}
       </main>
