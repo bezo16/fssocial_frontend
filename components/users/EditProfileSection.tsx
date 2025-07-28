@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form"
 import { Box, Text } from "@chakra-ui/react"
-import { AvatarRoot, AvatarImage, AvatarFallback } from "@chakra-ui/react"
 import TextInput from "@/components/common/TextInput"
 import BaseButton from "@/components/common/BaseButton"
 import useUserDataMe from "@/lib/hooks/users/useUserDataMe"
 import axiosApiCall from "@/lib/api/axiosApiCall"
 import { useState } from "react"
+import ProfilePicture from "../common/ProfilePicture"
 
 interface EditProfileFormInputs {
   bio: string
@@ -36,10 +36,7 @@ const EditProfileSection = () => {
       <Text fontWeight="bold" fontSize="xl" mb={4} color="blue.700">Upraviť profil</Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box display="flex" alignItems="center" gap={4} mb={4}>
-          <AvatarRoot size="xl">
-            <AvatarImage src={user?.avatarUrl} />
-            <AvatarFallback name={user?.username} />
-          </AvatarRoot>
+          <ProfilePicture avatarUrl={user?.avatarUrl as string} username={user?.username as string} />
           <Text fontWeight="bold" color="gray.700">{user?.username}</Text>
         </Box>
         {/* Avatar URL field removed, only bio is editable */}

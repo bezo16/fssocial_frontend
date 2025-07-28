@@ -1,3 +1,4 @@
+"use client"
 import { useForm, SubmitHandler } from "react-hook-form"
 import TextInput from "../common/TextInput"
 import BaseButton from "../common/BaseButton"
