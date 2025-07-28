@@ -9,7 +9,6 @@ import { useState } from "react"
 
 interface EditProfileFormInputs {
   bio: string
-  avatarUrl: string
 }
 
 const EditProfileSection = () => {
@@ -18,7 +17,6 @@ const EditProfileSection = () => {
   const { register, handleSubmit, formState: { errors } } = useForm<EditProfileFormInputs>({
     defaultValues: {
       bio: user?.bio || "",
-      avatarUrl: user?.avatarUrl || "",
     },
   })
 
@@ -44,13 +42,7 @@ const EditProfileSection = () => {
           </AvatarRoot>
           <Text fontWeight="bold" color="gray.700">{user?.username}</Text>
         </Box>
-        <TextInput
-          label="Avatar URL"
-          errorText={errors.avatarUrl?.message}
-          {...register("avatarUrl", { required: false })}
-          type="text"
-          placeholder="Zadaj URL obrázka"
-        />
+        {/* Avatar URL field removed, only bio is editable */}
         <TextInput
           label="Bio"
           errorText={errors.bio?.message}
