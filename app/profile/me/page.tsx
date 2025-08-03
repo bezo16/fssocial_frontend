@@ -1,10 +1,12 @@
 "use client"
+
 import EditAvatarSection from "@/components/users/EditAvatarSection"
 import CreatePostForm from "@/components/posts/CreatePostForm"
 import useProfilePostsMe from "@/lib/hooks/posts/useProfilePostsMe"
 import EditProfileSection from "@/components/users/EditProfileSection"
 import ProfileAvatarSection from "@/components/users/ProfileAvatarSection"
 import Image from "next/image"
+import NotificationsSection from "./NotificationsSection"
 
 export default function BlogPostPage() {
   const { data: posts } = useProfilePostsMe()

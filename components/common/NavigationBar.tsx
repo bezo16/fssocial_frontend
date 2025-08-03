@@ -1,5 +1,6 @@
 "use client"
 import { Box, Flex, Link, Button, Spacer } from "@chakra-ui/react"
+import NotificationsDropdown from "./NotificationsDropdown"
 import NextLink from "next/link"
 import { useRouter } from "next/navigation"
 
@@ -40,6 +41,10 @@ const NavigationBar = () => {
             Sign out
           </Button>
         </Flex>
+      </Flex>
+      <Flex h={14} alignItems="center" bg="teal.600" px={2}>
+        <Spacer />
+        <NotificationsDropdown />
       </Flex>
     </Box>
   )
