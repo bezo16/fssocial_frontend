@@ -20,6 +20,61 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Developer Workflow
+
+### Prerequisites
+
+- Node.js 20.x or later
+- npm (comes with Node.js)
+
+### Development Commands
+
+```bash
+# Install dependencies
+npm ci
+
+# Start development server
+npm run dev
+
+# Run linting (with auto-fix)
+npm run lint
+
+# Run tests
+npm run test
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+### Code Quality
+
+This project uses:
+- **ESLint** for code linting with Next.js and TypeScript rules
+- **Vitest** for unit testing with jsdom environment  
+- **TypeScript** with strict mode enabled for type checking
+
+### Pre-commit Checklist
+
+Before submitting a pull request, ensure:
+
+1. ✅ `npm run lint` passes without errors
+2. ✅ `npm run test` passes all tests
+3. ✅ TypeScript compilation succeeds (`npx tsc --noEmit`)
+4. ✅ Code follows the project's coding standards
+
+### CI/CD
+
+The project includes a GitHub Actions workflow (`.github/workflows/frontend-ci.yml`) that:
+- Runs on every push and pull request
+- Installs dependencies with `npm ci`
+- Executes lint checks with `npm run lint`
+- Runs stricter TypeScript checks using `tsconfig.ci.json`
+- Executes all tests with `npm run test`
+- Optionally builds the application (can be enabled via workflow dispatch)
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

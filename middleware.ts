@@ -9,6 +9,7 @@ export async function middleware(request: NextRequest) {
 
   try {
     await verifyJwtToken(token.value)
+    return NextResponse.next()
   }
   catch (error) {
     console.error("JWT verification failed:", error)
